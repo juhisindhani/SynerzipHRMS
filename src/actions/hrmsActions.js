@@ -1,7 +1,8 @@
-
-
-const getEmployees = () => {
-    return (dispatch, getState) => {
-
-    }
-}
+export const ON_EMP_DATARECIEVED = 'ON_EMP_DATARECIEVED';
+export const ON_JOB_DATARECIEVED = 'ON_JOB_DATARECIEVED';
+export const ON_PROJECT_DATARECIEVED = 'ON_PROJECT_DATARECIEVED';
+export const ON_BU_DATARECIEVED = 'ON_BU_DATARECIEVED';
+export const ON_SKILLS_DATARECIEVED = 'ON_SKILLS_DATARECIEVED';
+export const ON_DIRSEARCHCLICK = 'ON_DIRSEARCHCLICK';
+export const ON_DIRRESETCLICK = 'ON_DIRRESETCLICK';
+export const ON_MENUSELECT = 'ON_MENUSELECT';

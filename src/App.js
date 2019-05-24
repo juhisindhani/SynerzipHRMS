@@ -1,14 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
+
 import MainDrawer from './components/MainDrawer';
 import './App.css';
+import store from "./store/createStore";
+import Provider from "react-redux/es/components/Provider";
 
 function App() {
   return (
-    <div className="App">
-      <MainDrawer/>
-    </div>
+    <Provider store={store}>
+        <MainDrawer/>
+    </Provider>
   );
+
 }
 
 export default App;

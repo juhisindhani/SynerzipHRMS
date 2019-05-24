@@ -22,6 +22,12 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 import { withStyles } from '@material-ui/core/styles';
+import Synerzip_logo from '../images/Synerzip_Logo.png'
+import {onResetBtnClick, onSearchBtnClick} from "../actionCreators/directoryActionCreator";
+import connect from "react-redux/es/connect/connect";
+import {onMenuSelection} from "../actionCreators/appActionCreator";
+import SearchDirectoryComponent from "../assignment1/SearchDirectoryComponent";
+import ContentComponent from "../assignment1/ContentComponent";
 
 const drawerWidth = 240;
 
@@ -37,6 +43,7 @@ const styles = theme => ({
     },
     appBar: {
         marginLeft: drawerWidth,
+        height: 64,
         [theme.breakpoints.up('sm')]: {
             width: `calc(100% - ${drawerWidth}px)`,
         },
@@ -60,21 +67,31 @@ const styles = theme => ({
 class MainDrawer extends React.Component {
     state = {
         mobileOpen: false,
+        titles: 'Dashboard'
     };
 
     handleDrawerToggle = () => {
         this.setState(state => ({ mobileOpen: !state.mobileOpen }));
     };
-    handleClick = () => {
+    handleClick = (text) => {
+        this.props.onMenuSelection(text)
+
+    };
+    handleClickLeave = () => {
         this.setState(state => ({ open: !state.open }));
     };
 
     render() {
-        const { classes, theme } = this.props;
+        const { classes, theme, selectedMenu } = this.props;
 
         const drawer = (
             <div>
-                <div className={classes.toolbar} />
+                <div className={classes.toolbar}>
+                    <img width="200" height="50"
+                        src={Synerzip_logo}
+                        alt=""
+                    />
+                </div>
                 <Divider />
                 <List>
                     <ListItem button>
@@ -89,7 +106,7 @@ class MainDrawer extends React.Component {
                         </ListItemIcon>
                         <ListItemText inset primary="PIM" />
                     </ListItem>
-                    <ListItem button onClick={this.handleClick}>
+                    <ListItem button onClick={this.handleClickLeave}>
                         <ListItemIcon>
                             <InboxIcon />
                         </ListItemIcon>
@@ -125,14 +142,13 @@ class MainDrawer extends React.Component {
                         </List>
                     </Collapse>
                 </List>
-                <Divider />
                 <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                    {['Directory'].map((text, index) => (
+                        <ListItem button key={text} onClick={() => this.handleClick(text)}>
+                            <InboxIcon />
                             <ListItemText primary={text} />
                         </ListItem>
-                    ))}
+                        ))}
                 </List>
             </div>
         );
@@ -151,7 +167,7 @@ class MainDrawer extends React.Component {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" color="inherit" noWrap>
-                            Responsive drawer
+                            {selectedMenu}
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -184,8 +200,8 @@ class MainDrawer extends React.Component {
                     </Hidden>
                 </nav>
                 <main className={classes.content}>
-                    <div className={classes.toolbar} />
-
+                    <div className={classes.toolbar}/>
+                    <ContentComponent/>
                 </main>
             </div>
         );
@@ -199,5 +215,15 @@ MainDrawer.propTypes = {
     container: PropTypes.object,
     theme: PropTypes.object.isRequired,
 };
+const mapStateToProps = state => {
+    return {
+        selectedMenu: state.appReducer.selectedMenu
+    }
+};
 
-export default withStyles(styles, { withTheme: true })(MainDrawer);
+const connectTheComponent = connect(
+    mapStateToProps,
+    {onMenuSelection}
+)(MainDrawer);
+
+export default withStyles(styles, { withTheme: true })(connectTheComponent);

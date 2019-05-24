@@ -1,6 +1,6 @@
 import React from 'react';
 
-class EntryComponent extends React.Component {
+class DisplayEmployeesComponent extends React.Component {
     constructor(props){
         super(props);
         this.enteredValue = null;
@@ -31,4 +31,4 @@ class EntryComponent extends React.Component {
 
 }
 
-export default EntryComponent;
+export default DisplayEmployeesComponent;
