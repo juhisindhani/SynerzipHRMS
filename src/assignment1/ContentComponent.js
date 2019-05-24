@@ -2,7 +2,7 @@ import React from 'react';
 import connect from "react-redux/es/connect/connect";
 import SearchDirectoryComponent from "./SearchDirectoryComponent";
 
-
+//test component
 const ContentComponent = (props) =>{
 
     const {selectedMenu} = props;
